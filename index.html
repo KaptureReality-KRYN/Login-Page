@@ -3,73 +3,181 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kapture Reality - Employee Login Portal</title>
+  <title>Kapture Reality - Employee Portal</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
     body {
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: radial-gradient(circle at top left, #1a1c29, #0e1017);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      color: #333;
+      min-height: 100vh;
+      color: #fff;
+      overflow: hidden;
     }
+
+    /* Ambient Background Glow */
+    .bg-glow {
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      filter: blur(120px);
+      border-radius: 50%;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
     .login-container {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 45px 35px;
+      border-radius: 24px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
       width: 100%;
-      max-width: 400px;
+      max-width: 380px;
       text-align: center;
+      transition: transform 0.3s ease;
     }
-    .company-logo { max-width: 200px; height: auto; margin-bottom: 20px; }
-    h2 { color: #1a1a1a; font-size: 24px; margin-bottom: 5px; }
-    p.subtitle { color: #666; font-size: 13px; margin-bottom: 25px; }
+
+    .company-logo { 
+      max-width: 160px; 
+      height: auto; 
+      margin-bottom: 20px;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+    }
+
+    h2 { 
+      color: #ffffff; 
+      font-size: 22px; 
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px; 
+    }
+
+    p.subtitle { 
+      color: #a0aec0; 
+      font-size: 13px; 
+      margin-bottom: 28px; 
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
     .input-field {
       width: 100%;
-      padding: 14px;
-      margin-bottom: 15px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 15px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      font-size: 14px;
+      color: #fff;
+      outline: none;
+      transition: all 0.25s ease;
     }
-    .input-field:focus { outline: none; border-color: #667eea; }
+
+    .input-field::placeholder { color: #718096; }
+
+    .input-field:focus { 
+      border-color: #667eea; 
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+    }
+
     .btn-login {
       width: 100%;
       padding: 14px;
-      background: linear-gradient(to right, #667eea, #764ba2);
+      margin-top: 10px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
       cursor: pointer;
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.35);
+      transition: all 0.25s ease;
     }
-    #error-msg { color: #dc3545; font-size: 13px; margin-top: 15px; display: none; }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(102, 126, 234, 0.45);
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    .btn-login:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #error-msg { 
+      color: #fc8181; 
+      background: rgba(254, 178, 178, 0.1);
+      border: 1px solid rgba(252, 129, 129, 0.2);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px; 
+      margin-top: 18px; 
+      display: none; 
+    }
+
+    #success-msg {
+      color: #68d391;
+      background: rgba(104, 211, 145, 0.1);
+      border: 1px solid rgba(104, 211, 145, 0.2);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-top: 18px;
+      display: none;
+    }
   </style>
 </head>
 <body>
+
+<div class="bg-glow"></div>
 
 <div class="login-container">
   <img src="KRYN.jpeg" alt="Kapture Reality Logo" class="company-logo">
   <h2>Kapture Reality</h2>
   <p class="subtitle">Startup Attendance Portal</p>
   
-  <input type="text" id="username" class="input-field" placeholder="Username">
-  <input type="password" id="password" class="input-field" placeholder="Password">
+  <div class="input-group">
+    <input type="text" id="username" class="input-field" placeholder="Username" autocomplete="off">
+  </div>
+  <div class="input-group">
+    <input type="password" id="password" class="input-field" placeholder="Password">
+  </div>
+  
   <button class="btn-login" onclick="login()">Login & Start Shift</button>
+  
   <div id="error-msg"></div>
+  <div id="success-msg"></div>
 </div>
 
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4g-0ORm6Ud6WHEiE32Z8hQD-ObgGkXvCEYaQdfB1nFVZKz5xN0f5z6VsCb35xG-Jidg/exec";
   
-  // REPLACE THIS WITH YOUR INSTALLED EXTENSION ID
+  // REAL EXTENSION ID
   const EXTENSION_ID = "fnmojlmglahoebpfohllgefedfhhdlmd"; 
 
-  // Enter Key Listener
+  // Enter Key Listeners
   document.getElementById("username").addEventListener("keypress", function(e) { if (e.key === "Enter") login(); });
   document.getElementById("password").addEventListener("keypress", function(e) { if (e.key === "Enter") login(); });
 
@@ -77,8 +185,11 @@
     const user = document.getElementById('username').value.trim();
     const pass = document.getElementById('password').value.trim();
     const errorDiv = document.getElementById('error-msg');
+    const successDiv = document.getElementById('success-msg');
+    const loginBtn = document.querySelector('.btn-login');
     
     errorDiv.style.display = "none";
+    successDiv.style.display = "none";
 
     if(!user || !pass) {
       errorDiv.innerText = "Please enter both Username and Password!";
@@ -86,7 +197,6 @@
       return;
     }
 
-    const loginBtn = document.querySelector('.btn-login');
     loginBtn.innerText = "Authenticating...";
     loginBtn.disabled = true;
 
@@ -106,22 +216,31 @@
             startTime: Date.now()
           }, (response) => {
             if (chrome.runtime.lastError) {
-              alert("Login successful, but Extension not connected! Check Extension ID.");
+              loginBtn.innerText = "Login & Start Shift";
+              loginBtn.disabled = false;
+              errorDiv.innerText = "Extension Connection Failed! Check Extension ID.";
+              errorDiv.style.display = "block";
             } else {
-              alert("Login Successful! Shift Started.");
+              // SUCCESS - UPDATE UI & AUTO CLOSE TAB
+              loginBtn.innerText = "Shift Started!";
+              successDiv.innerText = "Login Successful! Closing tab...";
+              successDiv.style.display = "block";
+              
+              setTimeout(() => {
+                window.close(); // Tab Automatic Close
+              }, 1200);
             }
-            loginBtn.innerText = "Login & Start Shift";
-            loginBtn.disabled = false;
           });
         } else {
-          alert("Chrome API non-accessible. Extension installed-a irukaa nu paarunga.");
           loginBtn.innerText = "Login & Start Shift";
           loginBtn.disabled = false;
+          errorDiv.innerText = "Chrome Extension Not Detected!";
+          errorDiv.style.display = "block";
         }
       } else {
         loginBtn.innerText = "Login & Start Shift";
         loginBtn.disabled = false;
-        errorDiv.innerText = data.message || "Invalid Login Details!";
+        errorDiv.innerText = data.message || "Invalid Username or Password!";
         errorDiv.style.display = "block";
       }
     })

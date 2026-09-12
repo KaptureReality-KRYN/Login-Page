@@ -7,7 +7,7 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Segoe UI', Roboto, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       display: flex;
       justify-content: center;
@@ -24,7 +24,7 @@
       max-width: 400px;
       text-align: center;
     }
-    .company-logo { max-width: 300px; height: auto; margin-bottom: 20px; }
+    .company-logo { max-width: 260px; height: auto; margin-bottom: 20px; }
     h2 { color: #1a1a1a; font-size: 24px; margin-bottom: 5px; }
     p.subtitle { color: #666; font-size: 13px; margin-bottom: 25px; }
     .input-field {
@@ -66,7 +66,7 @@
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxWvLigVMytWvOkp4QTD07RgBsqnsy5JiwJfwSRae8ttOVl6Ec_F6kW6ArLOk1Ajnf6YA/exec";
   
-  // Extension ID replace pannanum (chrome://extensions la irukura ID)
+  // Extension ID Replace Pannungadhu (e.g., "gkmplbkj...")
   const EXTENSION_ID = "igndbabjonpkhabmhjogkldecgekegpp"; 
 
   function login() {
@@ -93,24 +93,23 @@
     })
     .then(res => res.json())
     .then(data => {
-      loginBtn.innerText = "Login & Start Shift";
-      loginBtn.disabled = false;
-
       if (data.result === "success") {
-        // 2. Direct-ah Extension Storage ku data send pannuthu
+        // 2. Direct Extension Message Send
         if (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.sendMessage) {
           chrome.runtime.sendMessage(EXTENSION_ID, {
             action: "START_TIMER",
             username: user,
             startTime: Date.now()
           }, (response) => {
-            alert("Login Successful! Timer started in Extension.");
+            // Tab close panroam
             window.close();
           });
         } else {
-          alert("Login Successful! Google Sheets updated.");
+          alert("Login Successful! Check Extension.");
         }
       } else {
+        loginBtn.innerText = "Login & Start Shift";
+        loginBtn.disabled = false;
         errorDiv.innerText = data.message;
         errorDiv.style.display = "block";
       }

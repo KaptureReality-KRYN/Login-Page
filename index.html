@@ -24,7 +24,7 @@
       max-width: 400px;
       text-align: center;
     }
-    .company-logo { max-width: 260px; height: auto; margin-bottom: 20px; }
+    .company-logo { max-width: 350px; height: auto; margin-bottom: 20px; }
     h2 { color: #1a1a1a; font-size: 24px; margin-bottom: 5px; }
     p.subtitle { color: #666; font-size: 13px; margin-bottom: 25px; }
     .input-field {
@@ -65,9 +65,22 @@
 
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxWvLigVMytWvOkp4QTD07RgBsqnsy5JiwJfwSRae8ttOVl6Ec_F6kW6ArLOk1Ajnf6YA/exec";
-  
-  // Extension ID Replace Pannungadhu (e.g., "gkmplbkj...")
   const EXTENSION_ID = "igndbabjonpkhabmhjogkldecgekegpp"; 
+
+  // Enter Key Event Listener for Username and Password Fields
+  document.getElementById("username").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      login();
+    }
+  });
+
+  document.getElementById("password").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      login();
+    }
+  });
 
   function login() {
     const user = document.getElementById('username').value.trim();
@@ -94,18 +107,17 @@
     .then(res => res.json())
     .then(data => {
       if (data.result === "success") {
-        // 2. Direct Extension Message Send
+        // 2. Extension-ku Message Send pannudhu
         if (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.sendMessage) {
           chrome.runtime.sendMessage(EXTENSION_ID, {
             action: "START_TIMER",
             username: user,
             startTime: Date.now()
           }, (response) => {
-            // Tab close panroam
             window.close();
           });
         } else {
-          alert("Login Successful! Check Extension.");
+          alert("Login Successful! Extension not detected.");
         }
       } else {
         loginBtn.innerText = "Login & Start Shift";

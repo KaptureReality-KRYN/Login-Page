@@ -4,116 +4,175 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kapture Reality - Employee Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
     * { 
       box-sizing: border-box; 
       margin: 0; 
       padding: 0; 
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     body {
-      background: radial-gradient(circle at top left, #1a1c29, #0e1017);
+      background: #f4f7f6;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      color: #fff;
+      color: #1e293b;
       overflow: hidden;
+      position: relative;
     }
 
-    /* Ambient Background Glow */
-    .bg-glow {
+    /* Modern Soft Green Ambient Glow Elements */
+    .bg-shape-1 {
       position: absolute;
-      width: 350px;
-      height: 350px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      filter: blur(120px);
+      top: -10%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
       border-radius: 50%;
       z-index: 0;
-      opacity: 0.6;
+    }
+
+    .bg-shape-2 {
+      position: absolute;
+      bottom: -10%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(5, 150, 105, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    /* Grid Overlay Pattern */
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(16, 185, 129, 0.12) 1px, transparent 1px);
+      background-size: 24px 24px;
+      z-index: 0;
     }
 
     .login-container {
       position: relative;
       z-index: 1;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 45px 35px;
-      border-radius: 24px;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 48px 40px;
+      border-radius: 28px;
+      box-shadow: 
+        0 20px 40px -15px rgba(16, 185, 129, 0.08),
+        0 0 15px rgba(0, 0, 0, 0.03),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.9);
       width: 100%;
-      max-width: 380px;
+      max-width: 410px;
       text-align: center;
-      transition: transform 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .logo-wrapper {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px auto;
+      background: #ffffff;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.15);
     }
 
     .company-logo { 
-      max-width: 160px; 
-      height: auto; 
-      margin-bottom: 20px;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+      max-width: 52px; 
+      max-height: 52px; 
+      object-fit: contain;
     }
 
     h2 { 
-      color: #ffffff; 
-      font-size: 22px; 
-      font-weight: 700;
+      color: #0f172a; 
+      font-size: 24px; 
+      font-weight: 800;
       letter-spacing: -0.5px;
-      margin-bottom: 4px; 
+      margin-bottom: 6px; 
     }
 
     p.subtitle { 
-      color: #a0aec0; 
-      font-size: 13px; 
-      margin-bottom: 28px; 
+      color: #64748b; 
+      font-size: 14px; 
+      font-weight: 500;
+      margin-bottom: 32px; 
     }
 
     .input-group {
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       text-align: left;
+    }
+
+    .input-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .input-field {
       width: 100%;
-      padding: 14px 16px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
+      padding: 14px 18px;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
       font-size: 14px;
-      color: #fff;
+      font-weight: 500;
+      color: #0f172a;
       outline: none;
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
     }
 
-    .input-field::placeholder { color: #718096; }
+    .input-field::placeholder { 
+      color: #94a3b8; 
+    }
 
     .input-field:focus { 
-      border-color: #667eea; 
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+      border-color: #10b981; 
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12);
     }
 
     .btn-login {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       margin-top: 10px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
       border: none;
-      border-radius: 12px;
+      border-radius: 14px;
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.35);
+      box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
       transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
     .btn-login:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
       transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(102, 126, 234, 0.45);
+      box-shadow: 0 14px 24px -5px rgba(16, 185, 129, 0.5);
     }
 
     .btn-login:active {
@@ -121,51 +180,69 @@
     }
 
     .btn-login:disabled {
-      opacity: 0.6;
+      background: #cbd5e1;
+      box-shadow: none;
       cursor: not-allowed;
       transform: none;
     }
 
     #error-msg { 
-      color: #fc8181; 
-      background: rgba(254, 178, 178, 0.1);
-      border: 1px solid rgba(252, 129, 129, 0.2);
-      padding: 10px;
-      border-radius: 8px;
+      color: #e11d48; 
+      background: #ffe4e6;
+      border: 1px solid #fecdd3;
+      padding: 12px;
+      border-radius: 10px;
       font-size: 13px; 
-      margin-top: 18px; 
+      font-weight: 600;
+      margin-top: 20px; 
       display: none; 
+      animation: fadeIn 0.3s ease;
     }
 
     #success-msg {
-      color: #68d391;
-      background: rgba(104, 211, 145, 0.1);
-      border: 1px solid rgba(104, 211, 145, 0.2);
-      padding: 10px;
-      border-radius: 8px;
+      color: #047857;
+      background: #d1fae5;
+      border: 1px solid #a7f3d0;
+      padding: 12px;
+      border-radius: 10px;
       font-size: 13px;
-      margin-top: 18px;
+      font-weight: 600;
+      margin-top: 20px;
       display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
-<div class="bg-glow"></div>
+<div class="bg-shape-1"></div>
+<div class="bg-shape-2"></div>
+<div class="bg-grid"></div>
 
 <div class="login-container">
-  <img src="KRYN.jpeg" alt="Kapture Reality Logo" class="company-logo">
+  <div class="logo-wrapper">
+    <img src="KRYN.jpeg" alt="Kapture Reality Logo" class="company-logo">
+  </div>
   <h2>Kapture Reality</h2>
   <p class="subtitle">Startup Attendance Portal</p>
   
   <div class="input-group">
-    <input type="text" id="username" class="input-field" placeholder="Username" autocomplete="off">
+    <label class="input-label" for="username">Username</label>
+    <input type="text" id="username" class="input-field" placeholder="Enter your username" autocomplete="off">
   </div>
   <div class="input-group">
-    <input type="password" id="password" class="input-field" placeholder="Password">
+    <label class="input-label" for="password">Password</label>
+    <input type="password" id="password" class="input-field" placeholder="••••••••">
   </div>
   
-  <button class="btn-login" onclick="login()">Login & Start Shift</button>
+  <button class="btn-login" onclick="login()">
+    <span>Login & Start Shift</span>
+  </button>
   
   <div id="error-msg"></div>
   <div id="success-msg"></div>
@@ -186,7 +263,8 @@
     const pass = document.getElementById('password').value.trim();
     const errorDiv = document.getElementById('error-msg');
     const successDiv = document.getElementById('success-msg');
-    const loginBtn = document.querySelector('.btn-login');
+    const loginBtn = document.querySelector('.btn-login span');
+    const btnElement = document.querySelector('.btn-login');
     
     errorDiv.style.display = "none";
     successDiv.style.display = "none";
@@ -198,7 +276,7 @@
     }
 
     loginBtn.innerText = "Authenticating...";
-    loginBtn.disabled = true;
+    btnElement.disabled = true;
 
     // Google Sheets Verification
     fetch(SCRIPT_URL, {
@@ -217,7 +295,7 @@
           }, (response) => {
             if (chrome.runtime.lastError) {
               loginBtn.innerText = "Login & Start Shift";
-              loginBtn.disabled = false;
+              btnElement.disabled = false;
               errorDiv.innerText = "Extension Connection Failed! Check Extension ID.";
               errorDiv.style.display = "block";
             } else {
@@ -226,26 +304,25 @@
               successDiv.innerText = "Login Successful! Closing tab...";
               successDiv.style.display = "block";
               
-              	// Replace the old window.close() block with this:
-		setTimeout(() => {
-  		// Try closing directly
-  		window.close();
+              setTimeout(() => {
+                // Try closing directly
+                window.close();
   
-  		// Script-opened window trick for stubborn browsers
-  		window.open('', '_self', '');
-  		window.close();
-		}, 1200);
+                // Script-opened window trick for stubborn browsers
+                window.open('', '_self', '');
+                window.close();
+              }, 1200);
             }
           });
         } else {
           loginBtn.innerText = "Login & Start Shift";
-          loginBtn.disabled = false;
+          btnElement.disabled = false;
           errorDiv.innerText = "Chrome Extension Not Detected!";
           errorDiv.style.display = "block";
         }
       } else {
         loginBtn.innerText = "Login & Start Shift";
-        loginBtn.disabled = false;
+        btnElement.disabled = false;
         errorDiv.innerText = data.message || "Invalid Username or Password!";
         errorDiv.style.display = "block";
       }
@@ -253,7 +330,7 @@
     .catch(err => {
       console.error(err);
       loginBtn.innerText = "Login & Start Shift";
-      loginBtn.disabled = false;
+      btnElement.disabled = false;
       errorDiv.innerText = "Server Connection Error!";
       errorDiv.style.display = "block";
     });

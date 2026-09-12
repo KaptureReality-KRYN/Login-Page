@@ -17,99 +17,99 @@
     }
 
     body {
-      background: #f4f7f6;
+      background: linear-gradient(135deg, #e6f4ea 0%, #f0fdf4 50%, #d1fae5 100%);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      color: #1e293b;
+      color: #0f172a;
       overflow: hidden;
       position: relative;
     }
 
-    /* Modern Soft Green Ambient Glow Elements */
+    /* Ambient Green Glow Effects */
     .bg-shape-1 {
       position: absolute;
-      top: -10%;
-      left: -10%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
+      top: -15%;
+      left: -15%;
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.28) 0%, rgba(255, 255, 255, 0) 70%);
       border-radius: 50%;
       z-index: 0;
     }
 
     .bg-shape-2 {
       position: absolute;
-      bottom: -10%;
-      right: -10%;
+      bottom: -15%;
+      right: -15%;
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(5, 150, 105, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+      background: radial-gradient(circle, rgba(5, 150, 105, 0.25) 0%, rgba(255, 255, 255, 0) 70%);
       border-radius: 50%;
       z-index: 0;
     }
 
-    /* Grid Overlay Pattern */
+    /* Modern Grid Accent */
     .bg-grid {
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(rgba(16, 185, 129, 0.12) 1px, transparent 1px);
-      background-size: 24px 24px;
+      background-image: radial-gradient(rgba(16, 185, 129, 0.15) 1.5px, transparent 1.5px);
+      background-size: 28px 28px;
       z-index: 0;
     }
 
     .login-container {
       position: relative;
       z-index: 1;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      padding: 48px 40px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      padding: 42px 36px;
       border-radius: 28px;
       box-shadow: 
-        0 20px 40px -15px rgba(16, 185, 129, 0.08),
-        0 0 15px rgba(0, 0, 0, 0.03),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+        0 20px 40px -10px rgba(5, 150, 105, 0.12),
+        0 8px 16px -8px rgba(0, 0, 0, 0.04);
       width: 100%;
-      max-width: 410px;
+      max-width: 420px;
       text-align: center;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    /* Larger Logo Container & Styling */
     .logo-wrapper {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 20px auto;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 18px auto;
       background: #ffffff;
-      border-radius: 20px;
+      border-radius: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.15);
+      box-shadow: 0 12px 28px rgba(16, 185, 129, 0.16);
+      border: 2px solid rgba(16, 185, 129, 0.2);
+      padding: 10px;
     }
 
     .company-logo { 
-      max-width: 52px; 
-      max-height: 52px; 
+      width: 100%;
+      height: 100%;
       object-fit: contain;
     }
 
     h2 { 
-      color: #0f172a; 
-      font-size: 24px; 
+      color: #064e3b; 
+      font-size: 25px; 
       font-weight: 800;
       letter-spacing: -0.5px;
-      margin-bottom: 6px; 
+      margin-bottom: 4px; 
     }
 
     p.subtitle { 
-      color: #64748b; 
-      font-size: 14px; 
-      font-weight: 500;
-      margin-bottom: 32px; 
+      color: #047857; 
+      font-size: 13.5px; 
+      font-weight: 600;
+      margin-bottom: 28px; 
     }
 
     .input-group {
@@ -121,33 +121,65 @@
       display: block;
       font-size: 12px;
       font-weight: 700;
-      color: #334155;
+      color: #065f46;
       margin-bottom: 6px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
     }
 
     .input-field {
       width: 100%;
-      padding: 14px 18px;
-      background: #f8fafc;
-      border: 1.5px solid #e2e8f0;
+      padding: 14px 16px;
+      background: #f0fdf4;
+      border: 1.5px solid #a7f3d0;
       border-radius: 14px;
       font-size: 14px;
-      font-weight: 500;
-      color: #0f172a;
+      font-weight: 600;
+      color: #064e3b;
       outline: none;
       transition: all 0.2s ease;
     }
 
     .input-field::placeholder { 
-      color: #94a3b8; 
+      color: #6ee7b7; 
+      font-weight: 500;
     }
 
     .input-field:focus { 
       border-color: #10b981; 
       background: #ffffff;
-      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12);
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18);
+    }
+
+    /* Toggle Password Eye Button */
+    .toggle-password {
+      position: absolute;
+      right: 14px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #059669;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border-radius: 8px;
+      transition: color 0.2s;
+    }
+
+    .toggle-password:hover {
+      color: #047857;
+    }
+
+    .toggle-password svg {
+      width: 20px;
+      height: 20px;
     }
 
     .btn-login {
@@ -161,18 +193,14 @@
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
+      box-shadow: 0 10px 22px -4px rgba(16, 185, 129, 0.45);
       transition: all 0.25s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
     }
 
     .btn-login:hover {
       background: linear-gradient(135deg, #059669 0%, #047857 100%);
       transform: translateY(-2px);
-      box-shadow: 0 14px 24px -5px rgba(16, 185, 129, 0.5);
+      box-shadow: 0 14px 26px -4px rgba(16, 185, 129, 0.55);
     }
 
     .btn-login:active {
@@ -180,21 +208,21 @@
     }
 
     .btn-login:disabled {
-      background: #cbd5e1;
+      background: #a7f3d0;
       box-shadow: none;
       cursor: not-allowed;
       transform: none;
     }
 
     #error-msg { 
-      color: #e11d48; 
+      color: #be123c; 
       background: #ffe4e6;
       border: 1px solid #fecdd3;
       padding: 12px;
       border-radius: 10px;
       font-size: 13px; 
       font-weight: 600;
-      margin-top: 20px; 
+      margin-top: 18px; 
       display: none; 
       animation: fadeIn 0.3s ease;
     }
@@ -207,7 +235,7 @@
       border-radius: 10px;
       font-size: 13px;
       font-weight: 600;
-      margin-top: 20px;
+      margin-top: 18px;
       display: none;
       animation: fadeIn 0.3s ease;
     }
@@ -233,11 +261,23 @@
   
   <div class="input-group">
     <label class="input-label" for="username">Username</label>
-    <input type="text" id="username" class="input-field" placeholder="Enter your username" autocomplete="off">
+    <div class="input-wrapper">
+      <input type="text" id="username" class="input-field" placeholder="Enter your username" autocomplete="off">
+    </div>
   </div>
+  
   <div class="input-group">
     <label class="input-label" for="password">Password</label>
-    <input type="password" id="password" class="input-field" placeholder="••••••••">
+    <div class="input-wrapper">
+      <input type="password" id="password" class="input-field" placeholder="••••••••">
+      <button type="button" class="toggle-password" onclick="togglePasswordVisibility()" aria-label="Toggle password visibility">
+        <!-- Eye Icon -->
+        <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
+      </button>
+    </div>
   </div>
   
   <button class="btn-login" onclick="login()">
@@ -257,6 +297,22 @@
   // Enter Key Listeners
   document.getElementById("username").addEventListener("keypress", function(e) { if (e.key === "Enter") login(); });
   document.getElementById("password").addEventListener("keypress", function(e) { if (e.key === "Enter") login(); });
+
+  // Toggle Password Show/Hide Function
+  function togglePasswordVisibility() {
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eye-icon');
+    
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      // Eye Off Icon SVG
+      eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a10.025 10.025 0 0110.122 5.937 9.97 9.97 0 01-1.563 3.029m-5.858 5.908a3 3 0 11-4.243-4.243M3 3l18 18" />`;
+    } else {
+      passwordInput.type = 'password';
+      // Regular Eye Icon SVG
+      eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />`;
+    }
+  }
 
   function login() {
     const user = document.getElementById('username').value.trim();

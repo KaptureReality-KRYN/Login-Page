@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapture Reality - Employee Login Portal</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+    .login-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .company-logo { max-width: 300px; height: auto; margin-bottom: 20px; }
+    h2 { color: #1a1a1a; font-size: 24px; margin-bottom: 5px; }
+    p.subtitle { color: #666; font-size: 13px; margin-bottom: 25px; }
+    .input-field {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    .input-field:focus { outline: none; border-color: #667eea; }
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #error-msg { color: #dc3545; font-size: 13px; margin-top: 15px; display: none; }
+  </style>
+</head>
+<body>
+
+<div class="login-container">
+  <img src="KRYN.jpeg" alt="Kapture Reality Logo" class="company-logo">
+  <h2>Kapture Reality</h2>
+  <p class="subtitle">Startup Attendance Portal</p>
+  
+  <input type="text" id="username" class="input-field" placeholder="Username">
+  <input type="password" id="password" class="input-field" placeholder="Password">
+  <button class="btn-login" onclick="login()">Login & Start Shift</button>
+  <div id="error-msg"></div>
+</div>
+
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxWvLigVMytWvOkp4QTD07RgBsqnsy5JiwJfwSRae8ttOVl6Ec_F6kW6ArLOk1Ajnf6YA/exec";
+  
+  // Extension ID replace pannanum (chrome://extensions la irukura ID)
+  const EXTENSION_ID = "igndbabjonpkhabmhjogkldecgekegpp"; 
+
+  function login() {
+    const user = document.getElementById('username').value.trim();
+    const pass = document.getElementById('password').value.trim();
+    const errorDiv = document.getElementById('error-msg');
+    
+    errorDiv.style.display = "none";
+
+    if(!user || !pass) {
+      errorDiv.innerText = "Please enter both Username and Password!";
+      errorDiv.style.display = "block";
+      return;
+    }
+
+    const loginBtn = document.querySelector('.btn-login');
+    loginBtn.innerText = "Authenticating...";
+    loginBtn.disabled = true;
+
+    // 1. Google Sheets Verification
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify({ username: user, password: pass, action: "LOGIN" })
+    })
+    .then(res => res.json())
+    .then(data => {
+      loginBtn.innerText = "Login & Start Shift";
+      loginBtn.disabled = false;
+
+      if (data.result === "success") {
+        // 2. Direct-ah Extension Storage ku data send pannuthu
+        if (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.sendMessage) {
+          chrome.runtime.sendMessage(EXTENSION_ID, {
+            action: "START_TIMER",
+            username: user,
+            startTime: Date.now()
+          }, (response) => {
+            alert("Login Successful! Timer started in Extension.");
+            window.close();
+          });
+        } else {
+          alert("Login Successful! Google Sheets updated.");
+        }
+      } else {
+        errorDiv.innerText = data.message;
+        errorDiv.style.display = "block";
+      }
+    })
+    .catch(err => {
+      loginBtn.innerText = "Login & Start Shift";
+      loginBtn.disabled = false;
+      errorDiv.innerText = "Server Connection Error!";
+      errorDiv.style.display = "block";
+    });
+  }
+</script>
+
+</body>
+</html>

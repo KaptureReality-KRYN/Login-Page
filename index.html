@@ -266,9 +266,6 @@
 
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4g-0ORm6Ud6WHEiE32Z8hQD-ObgGkXvCEYaQdfB1nFVZKz5xN0f5z6VsCb35xG-Jidg/exec";
-  
-  // DEFAULT HARDCODED EXTENSION ID
-  let EXTENSION_ID = "goklcgagleleoiahenhbcemhigocljdo"; 
 
   // Enter Key Listeners
   document.getElementById("username").addEventListener("keypress", function(e) { if (e.key === "Enter") login(); });
@@ -280,29 +277,44 @@
     const eyeIcon = document.getElementById('eye-icon');
     if (passwordInput.type === 'password') {
       passwordInput.type = 'text';
-      // Eye Off Icon SVG
       eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a10.025 10.025 0 0110.122 5.937 9.97 9.97 0 01-1.563 3.029m-5.858 5.908a3 3 0 11-4.243-4.243M3 3l18 18" />`;
     } else {
       passwordInput.type = 'password';
-      // Regular Eye Icon SVG
       eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />`;
     }
   }
 
-  // Dynamic communication helper to send message with fallback handling
-  function sendExtensionMessage(targetId, payload, callback) {
-    if (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.sendMessage) {
-      chrome.runtime.sendMessage(targetId, payload, (response) => {
-        if (chrome.runtime.lastError) {
-          // Fallback check if extension communicates via window events
-          callback(null, chrome.runtime.lastError);
-        } else {
-          callback(response, null);
+  // Communication helper: Broadcasts message via Content Script (No Extension ID Needed)
+  function triggerExtensionShift(user, callback) {
+    let responded = false;
+
+    const responseHandler = (event) => {
+      if (event.data && event.data.action === "SHIFT_STARTED_RESPONSE") {
+        window.removeEventListener("message", responseHandler);
+        if (!responded) {
+          responded = true;
+          callback(event.data.success);
         }
-      });
-    } else {
-      callback(null, new Error("Chrome API not available"));
-    }
+      }
+    };
+
+    window.addEventListener("message", responseHandler);
+
+    // Send payload to content.js
+    window.postMessage({
+      action: "START_SHIFT_FROM_PAGE",
+      username: user,
+      startTime: Date.now()
+    }, "*");
+
+    // Timeout fallback (2.5 Seconds)
+    setTimeout(() => {
+      if (!responded) {
+        responded = true;
+        window.removeEventListener("message", responseHandler);
+        callback(false);
+      }
+    }, 2500);
   }
 
   function login() {
@@ -333,21 +345,9 @@
     .then(data => {
       if (data.result === "success") {
 
-        const payload = {
-          action: "START_TIMER",
-          username: user,
-          startTime: Date.now()
-        };
-
-        // Try sending message to target extension ID
-        sendExtensionMessage(EXTENSION_ID, payload, (response, err) => {
-          if (err) {
-            loginBtn.innerText = "Login & Start Shift";
-            btnElement.disabled = false;
-            errorDiv.innerText = "Extension Connection Failed! Please verify Extension installation.";
-            errorDiv.style.display = "block";
-          } else {
-            // SUCCESS - UPDATE UI & AUTO CLOSE TAB
+        // Trigger Content Script Communication
+        triggerExtensionShift(user, (isSuccess) => {
+          if (isSuccess) {
             loginBtn.innerText = "Shift Started!";
             successDiv.innerText = "Login Successful! Closing tab...";
             successDiv.style.display = "block";
@@ -356,6 +356,11 @@
               window.open('', '_self', '');
               window.close();
             }, 1200);
+          } else {
+            loginBtn.innerText = "Login & Start Shift";
+            btnElement.disabled = false;
+            errorDiv.innerText = "Extension Connection Failed! Please verify Extension installation.";
+            errorDiv.style.display = "block";
           }
         });
 
